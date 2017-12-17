@@ -9,7 +9,10 @@ repositories {
     mavenCentral()
 }
 
+//mainClassName = "eu.damodara.manager.ManagerApp"
+
 dependencies {
     compile 'org.apache.poi:poi-ooxml:3.17'
+    compile 'commons-io:commons-io:2.4'
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0'
 }

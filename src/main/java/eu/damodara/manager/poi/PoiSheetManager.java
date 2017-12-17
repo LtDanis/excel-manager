@@ -15,10 +15,10 @@ import static java.util.stream.Collectors.toList;
 
 public class PoiSheetManager implements SheetManager {
     @Override
-    public Workbook deleteRows(Workbook workbook, Integer... rows) {
+    public Workbook deleteRows(Workbook workbook, List<Integer> rows) {
         IntStream.range(0, workbook.getNumberOfSheets())
                 .forEach(sheetIndex ->
-                        processRows(workbook.getSheetAt(sheetIndex), asList(rows)));
+                        processRows(workbook.getSheetAt(sheetIndex), rows));
         return workbook;
     }
 
@@ -37,10 +37,10 @@ public class PoiSheetManager implements SheetManager {
     }
 
     @Override
-    public Workbook deleteColumns(Workbook workbook, Integer... columns) {
+    public Workbook deleteColumns(Workbook workbook, List<Integer> columns) {
         IntStream.range(0, workbook.getNumberOfSheets())
                 .forEach(sheetIndex ->
-                        processColumns(workbook.getSheetAt(sheetIndex), asList(columns)));
+                        processColumns(workbook.getSheetAt(sheetIndex), columns));
         return workbook;
     }
 

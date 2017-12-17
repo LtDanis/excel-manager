@@ -2,8 +2,15 @@ package eu.damodara.manager.api;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
-public interface SheetManager {
-    Workbook deleteColumns(Workbook workbook, Integer... columns);
+import java.util.List;
 
-    Workbook deleteRows(Workbook workbook, Integer... rows);
+public interface SheetManager {
+    Workbook deleteColumns(Workbook workbook, List<Integer> columns);
+
+    Workbook deleteRows(Workbook workbook, List<Integer> rows);
+
+    default Workbook delete(Workbook workbook, List<Integer> columns, List<Integer> rows) {
+        Workbook withDeletedColumns = deleteColumns(workbook, columns);
+        return deleteRows(withDeletedColumns, rows);
+    }
 }

@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-class PoiSheetManagerTest {
+import static java.util.Arrays.asList;
+
+class AcceptanceTest {
     private static final String FILE_NAME = "test.xlsx";
     private static final String OUTPUT_FILE_NAME = "data/result.xlsx";
     private PoiSheetManager poiSheetManager;
@@ -23,8 +25,8 @@ class PoiSheetManagerTest {
     void acceptanceTest() throws IOException {
         XSSFWorkbook workbook = readFromFile();
 
-        poiSheetManager.deleteColumns(workbook, 3, 1, 10);
-        poiSheetManager.deleteRows(workbook, 0, 19, 1);
+        poiSheetManager.deleteColumns(workbook, asList(3, 1, 10));
+        poiSheetManager.deleteRows(workbook, asList(0, 19, 1));
 
         writeWorkbookToFile(workbook);
     }
