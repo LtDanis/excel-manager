@@ -1,7 +1,9 @@
 package eu.damodara.manager.api;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 
 public interface SheetManager {
-    XSSFWorkbook deleteColumns(XSSFWorkbook workbook, Integer... columns);
+    Workbook deleteColumns(Workbook workbook, Integer... columns);
+
+    Workbook deleteRows(Workbook workbook, Integer... rows);
 }
