@@ -1,6 +1,7 @@
 group 'excel-manager'
 version '1.0-SNAPSHOT'
 
+apply plugin: 'application'
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
@@ -9,7 +10,19 @@ repositories {
     mavenCentral()
 }
 
-//mainClassName = "eu.damodara.manager.ManagerApp"
+mainClassName = 'eu.damodara.manager.ManagerApp'
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'eu.damodara.manager.ManagerApp'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 
 dependencies {
     compile 'org.apache.poi:poi-ooxml:3.17'

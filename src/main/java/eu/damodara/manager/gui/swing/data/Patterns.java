@@ -13,10 +13,11 @@ public class Patterns {
     private static final PatternEntity PATTERN_1 = new PatternEntity("Šablonas - 1",
             asList(1, 2, 3),
             asList(0, 3));
-private static final PatternEntity PATTERN_2 = new PatternEntity("Šablonas - 2",
-        asList(3),
-        asList(4));
+    private static final PatternEntity PATTERN_2 = new PatternEntity("Šablonas - 2",
+            asList(3),
+            asList(4));
+
     public static List<PatternEntity> getExportPatterns() {
-        return asList(PATTERN_1,PATTERN_2);
+        return asList(PATTERN_1, PATTERN_2);
     }
 }
