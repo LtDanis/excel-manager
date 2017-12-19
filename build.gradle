@@ -5,18 +5,17 @@ apply plugin: 'application'
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
+mainClassName = 'eu.damodara.manager.ManagerApp'
 
 repositories {
     mavenCentral()
 }
 
-mainClassName = 'eu.damodara.manager.ManagerApp'
-
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File Example',
+        attributes 'Implementation-Title': project.name,
                 'Implementation-Version': version,
-                'Main-Class': 'eu.damodara.manager.ManagerApp'
+                'Main-Class': mainClassName
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

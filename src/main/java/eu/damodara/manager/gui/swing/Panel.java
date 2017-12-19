@@ -14,11 +14,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static eu.damodara.manager.gui.swing.data.XlsxFileFilter.EXTENSION;
 import static eu.damodara.manager.gui.swing.data.XlsxFileFilter.createFileFilter;
+import static java.lang.String.format;
 
 public class Panel {
     private static final String NAME = "Ekselio šablonų tvarkyklė.";
@@ -48,39 +50,50 @@ public class Panel {
 
     private JButton createImportButton() {
         JButton importButton = new JButton(IMPORT);
+        importAction(importButton);
+        return importButton;
+    }
+
+    private void importAction(JButton importButton) {
         importButton.addActionListener(actionEvent -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(createFileFilter());
-            int returnValue = fileChooser.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
+            if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 if (selectedFile.canRead())
                     importWorkbook(selectedFile);
                 setExportButtons(true);
             }
         });
-        return importButton;
     }
 
     private Component createExportButton(PatternEntity patternEntity) {
         JButton exportButton = new JButton(patternEntity.getName());
         exportButtons.add(exportButton);
         exportButton.setEnabled(false);
+        exportAction(patternEntity, exportButton);
+        return exportButton;
+    }
+
+    private void exportAction(PatternEntity patternEntity, JButton exportButton) {
         exportButton.addActionListener(actionEvent -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(createFileFilter());
-            int returnValue = fileChooser.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
+            fileChooser.setSelectedFile(new File(builderExportFileName(patternEntity)));
+            if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 manager.delete(workbook, patternEntity.getColumns(), patternEntity.getRows());
                 exportWorkbook(getSelectedFileWithExtension(fileChooser.getSelectedFile()));
                 setExportButtons(false);
             }
         });
-        return exportButton;
+    }
+
+    private String builderExportFileName(PatternEntity patternEntity) {
+        return format("%s_%s%s", LocalDate.now(), patternEntity.getName(), EXTENSION);
     }
 
     private File getSelectedFileWithExtension(File selectedFile) {
-        if (FilenameUtils.getExtension(selectedFile.getName()).equalsIgnoreCase(XlsxFileFilter.EXTENSION.replace(".", ""))) {
+        if (FilenameUtils.getExtension(selectedFile.getName()).equalsIgnoreCase(XlsxFileFilter.EXTENSION)) {
             return selectedFile;
         } else {
             return new File(selectedFile.getParentFile(), FilenameUtils.getBaseName(selectedFile.getName()) + EXTENSION);
